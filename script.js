@@ -19,3 +19,7 @@ function enviarFormulario(e) {
 function toggleMenu() {
   document.getElementById("nav").classList.toggle("active");
 }
+function toggleSocial() {
+  const sidebar = document.getElementById("socialSidebar");
+  sidebar.classList.toggle("active");
+}
