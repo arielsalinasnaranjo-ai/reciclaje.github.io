@@ -217,3 +217,48 @@ nav a {
     max-height: 300px;
   }
 }
+/* SIDEBAR REDES */
+.social-sidebar {
+  position: fixed;
+  top: 50%;
+  right: -150px; /* oculto inicialmente */
+  transform: translateY(-50%);
+  transition: 0.3s;
+  z-index: 1000;
+}
+
+/* Cuando está activo */
+.social-sidebar.active {
+  right: 0;
+}
+
+/* Botón */
+.toggle-btn {
+  background: #2ecc71;
+  color: white;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px 0 0 8px;
+  font-size: 18px;
+}
+
+/* Iconos */
+.social-icons {
+  display: flex;
+  flex-direction: column;
+  background: #2ecc71;
+  padding: 10px;
+  border-radius: 8px 0 0 8px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 20px;
+  margin: 10px 0;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+}
