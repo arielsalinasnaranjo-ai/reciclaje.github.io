@@ -1,1 +1,108 @@
-<h1>Hola mundo</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reciclaje Verde</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f0fdf4;
+            color: #1b4332;
+        }
+        header {
+            background: linear-gradient(135deg, #2d6a4f, #40916c);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        section {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 250px;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .icon {
+            font-size: 50px;
+        }
+        footer {
+            background: #1b4332;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            background: #52b788;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        button:hover {
+            background: #40916c;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>♻️ Reciclaje Verde</h1>
+    <p>Cuidemos el planeta juntos</p>
+</header>
+
+<section>
+    <h2>¿Por qué reciclar?</h2>
+    <p>El reciclaje ayuda a reducir la contaminación, ahorrar recursos y proteger el medio ambiente.</p>
+</section>
+
+<section>
+    <h2>Tipos de reciclaje</h2>
+    <div class="cards">
+        <div class="card">
+            <div class="icon">🧴</div>
+            <h3>Plástico</h3>
+            <p>Botellas, envases y bolsas.</p>
+        </div>
+        <div class="card">
+            <div class="icon">📄</div>
+            <h3>Papel</h3>
+            <p>Revistas, diarios y cartón.</p>
+        </div>
+        <div class="card">
+            <div class="icon">🍾</div>
+            <h3>Vidrio</h3>
+            <p>Botellas y frascos.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Haz tu parte</h2>
+    <p>Empieza hoy separando tus residuos en casa.</p>
+    <button onclick="alert('¡Gracias por ayudar al planeta! 🌎')">Comenzar</button>
+</section>
+
+<footer>
+    <p>© 2026 Reciclaje Verde</p>
+</footer>
+
+</body>
+</html>
