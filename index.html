@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EcoRecicla</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="estilos.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -59,127 +59,6 @@
   <p>© 2026 EcoRecicla | Cuidemos el planeta 🌎</p>
 </footer>
 
-<script src="js/script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
-
-/* ================= CSS ================= */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: #f4f7f6;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #1abc9c;
-  padding: 15px 30px;
-  color: white;
-}
-
-nav a {
-  margin: 0 10px;
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.hero {
-  height: 80vh;
-  background: linear-gradient(120deg, #16a085, #1abc9c);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-}
-
-.btn {
-  background: white;
-  color: #16a085;
-  padding: 10px 20px;
-  border-radius: 25px;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 15px;
-}
-
-.section {
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.section.dark {
-  background: #2c3e50;
-  color: white;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-}
-
-input, textarea {
-  width: 80%;
-  padding: 12px;
-  margin: 10px auto;
-  display: block;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-button {
-  background: #1abc9c;
-  border: none;
-  padding: 12px 25px;
-  color: white;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-.resultado {
-  margin-top: 20px;
-  font-size: 1.2em;
-}
-
-footer {
-  background: #111;
-  color: white;
-  padding: 15px;
-}
-
-/* ================= JS ================= */
-function calcularImpacto() {
-  let kg = document.getElementById('kg').value;
-
-  if (!kg || kg <= 0) {
-    document.getElementById('resultado').innerText = "Ingresa un valor válido";
-    return;
-  }
-
-  let ahorro = (kg * 2.5).toFixed(2);
-
-  document.getElementById('resultado').innerText =
-    `🌱 Has evitado aproximadamente ${ahorro} kg de CO2`;
-}
-
-function enviarFormulario(e) {
-  e.preventDefault();
-  alert("Mensaje enviado correctamente 🌱");
-}
