@@ -1,3 +1,11 @@
+:root {
+  primary: #0B3C49;   /* azul petróleo (industrial) */
+  secondary: #1F7A8C; /* verde azulado técnico */
+  accent: #F2A900;    /* amarillo industrial (energía) */
+  dark: #0A1F24;      /* fondo oscuro elegante */
+  light: #F4F7F8;     /* gris claro limpio */
+  text: #1E2A2F;
+}
 * {
   margin: 0;
   padding: 0;
