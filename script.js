@@ -1,18 +1,18 @@
 function calcularImpacto() {
-  let kg = document.getElementById('kg').value;
+  const kg = document.getElementById("kg").value;
 
-  if (!kg || kg <= 0) {
-    document.getElementById('resultado').innerText = "Ingresa un valor válido";
+  if (kg === "" || kg <= 0) {
+    document.getElementById("resultado").innerText = "Ingresa un valor válido";
     return;
   }
 
-  let ahorro = (kg * 2.5).toFixed(2);
+  const ahorroCO2 = kg * 1.5; // estimación simple
 
-  document.getElementById('resultado').innerText =
-    `🌱 Has evitado aproximadamente ${ahorro} kg de CO2`;
+  document.getElementById("resultado").innerText =
+    `Has reducido aproximadamente ${ahorroCO2.toFixed(2)} kg de CO2 🌱`;
 }
 
 function enviarFormulario(e) {
   e.preventDefault();
-  alert("Mensaje enviado correctamente 🌱");
+  alert("Mensaje enviado correctamente ✅");
 }
