@@ -141,3 +141,79 @@ button:hover {
   transform: scale(1.2);
   color: #a5d6a7;
 }
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #1b5e20;
+  color: white;
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.logo span {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* NAV */
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+/* HAMBURGUESA */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;
+  }
+
+  nav {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: #1b5e20;
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.3s;
+  }
+
+  nav a {
+    padding: 15px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+
+  nav.active {
+    max-height: 300px;
+  }
+}
