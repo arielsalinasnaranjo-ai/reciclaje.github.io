@@ -16,3 +16,6 @@ function enviarFormulario(e) {
   e.preventDefault();
   alert("Mensaje enviado correctamente ✅");
 }
+function toggleMenu() {
+  document.getElementById("nav").classList.toggle("active");
+}
