@@ -3,84 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoRecicla | Futuro Sustentable</title>
-
+  <title>EcoRecicla</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <div class="logo">♻️ EcoRecicla</div>
-  <ul class="nav-links">
-    <li><a href="#inicio">Inicio</a></li>
-    <li><a href="#tipos">Reciclaje</a></li>
-    <li><a href="#impacto">Impacto</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<header id="inicio" class="hero">
-  <div class="hero-content">
-    <h1>Transforma residuos en futuro</h1>
-    <p>Pequeñas acciones generan grandes cambios</p>
-    <button onclick="scrollToSection('tipos')">Comenzar</button>
-  </div>
+<header>
+  <h1>🌱 EcoRecicla</h1>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#info">Información</a>
+    <a href="#calculadora">Calculadora</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
 </header>
 
-<!-- TIPOS -->
-<section id="tipos" class="section">
-  <h2 class="title">Tipos de Reciclaje</h2>
+<section id="inicio" class="hero">
+  <h2>Reciclar es cuidar el planeta</h2>
+  <p>Aprende, calcula tu impacto y contribuye al medio ambiente</p>
+</section>
+
+<section id="info">
+  <h2>¿Qué reciclar?</h2>
   <div class="cards">
-    <div class="card">
-      <div class="icon">🧴</div>
-      <h3>Plástico</h3>
-      <p>Reduce y reutiliza envases plásticos.</p>
-    </div>
-
-    <div class="card">
-      <div class="icon">📄</div>
-      <h3>Papel</h3>
-      <p>Recicla papel para salvar árboles.</p>
-    </div>
-
-    <div class="card">
-      <div class="icon">🍾</div>
-      <h3>Vidrio</h3>
-      <p>100% reciclable infinitas veces.</p>
-    </div>
+    <div class="card">♻️ Plástico</div>
+    <div class="card">📄 Papel</div>
+    <div class="card">🍾 Vidrio</div>
+    <div class="card">🔩 Metal</div>
   </div>
 </section>
 
-<!-- IMPACTO -->
-<section id="impacto" class="section dark">
-  <h2 class="title">Nuestro Impacto</h2>
-  <div class="stats">
-    <div class="stat">
-      <h3>+1200</h3>
-      <p>Toneladas recicladas</p>
-    </div>
-    <div class="stat">
-      <h3>+800</h3>
-      <p>Personas activas</p>
-    </div>
-  </div>
+<section id="calculadora">
+  <h2>Calcula tu impacto</h2>
+  <input type="number" id="kg" placeholder="Kg reciclados">
+  <button onclick="calcularImpacto()">Calcular</button>
+  <p id="resultado"></p>
 </section>
 
-<!-- CONTACTO -->
-<section id="contacto" class="section">
-  <h2 class="title">Únete al cambio</h2>
-  <button onclick="showMessage()">Quiero reciclar</button>
+<section id="contacto">
+  <h2>Contacto</h2>
+  <form>
+    <input type="text" placeholder="Nombre" required>
+    <input type="email" placeholder="Correo" required>
+    <textarea placeholder="Mensaje"></textarea>
+    <button type="submit">Enviar</button>
+  </form>
 </section>
 
 <footer>
   <p>© 2026 EcoRecicla</p>
 </footer>
 
-<!-- 👇 AQUÍ SE CONECTA EL JS -->
 <script src="script.js"></script>
-
 </body>
 </html>
+
+/* styles.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+}
+
+header {
+  background: #2ecc71;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.hero {
+  text-align: center;
+  padding: 50px;
+  background: linear-gradient(120deg, #27ae60, #2ecc71);
+  color: white;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+section {
+  padding: 40px;
+  text-align: center;
+}
+
+input, textarea {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 80%;
+}
+
+button {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+footer {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* script.js */
+function calcularImpacto() {
+  let kg = document.getElementById('kg').value;
+  let ahorro = kg * 2; // ejemplo simple
+  document.getElementById('resultado').innerText =
+    `Has ahorrado aproximadamente ${ahorro} kg de CO2`;
+}
+
