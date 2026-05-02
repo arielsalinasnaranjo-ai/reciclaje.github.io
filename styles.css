@@ -1,55 +1,76 @@
-body {
-  font-family: 'Poppins', sans-serif;
+* {
   margin: 0;
-  background: #f4f7f6;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
+body {
+  background: #f4f7f5;
+  color: #333;
+}
+
+/* HEADER */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #1abc9c;
-  padding: 15px 30px;
+  padding: 20px;
+  background: #1b5e20;
   color: white;
 }
 
-nav a {
-  margin: 0 10px;
+.header nav a {
   color: white;
+  margin-left: 15px;
   text-decoration: none;
   font-weight: 500;
 }
 
+.header nav a:hover {
+  text-decoration: underline;
+}
+
+/* HERO */
 .hero {
-  height: 80vh;
-  background: linear-gradient(120deg, #16a085, #1abc9c);
+  height: 90vh;
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+              url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6');
+  background-size: cover;
+  background-position: center;
   display: flex;
-  justify-content: center;
   align-items: center;
-  color: white;
+  justify-content: center;
   text-align: center;
+  color: white;
+}
+
+.hero h2 {
+  font-size: 3rem;
 }
 
 .btn {
-  background: white;
-  color: #16a085;
-  padding: 10px 20px;
-  border-radius: 25px;
-  text-decoration: none;
   display: inline-block;
   margin-top: 15px;
+  padding: 10px 20px;
+  background: #4caf50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
 }
 
+/* SECTIONS */
 .section {
   padding: 60px 20px;
   text-align: center;
 }
 
-.section.dark {
-  background: #2c3e50;
+.dark {
+  background: #2e7d32;
   color: white;
 }
 
+/* CARDS */
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -60,40 +81,40 @@ nav a {
 .card {
   background: white;
   padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
+  border-radius: 10px;
+  transition: 0.3s;
 }
 
 .card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-5px);
 }
 
-input, textarea {
-  width: 80%;
-  padding: 12px;
-  margin: 10px auto;
-  display: block;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+/* FORM */
+form {
+  max-width: 400px;
+  margin: auto;
+}
+
+form input, form textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
 }
 
 button {
-  background: #1abc9c;
+  background: #4caf50;
   border: none;
-  padding: 12px 25px;
+  padding: 10px;
   color: white;
-  border-radius: 20px;
   cursor: pointer;
 }
 
-.resultado {
-  margin-top: 20px;
-  font-size: 1.2em;
+button:hover {
+  background: #388e3c;
 }
 
-footer {
-  background: #111;
-  color: white;
-  padding: 15px;
+/* RESULTADO */
+.resultado {
+  margin-top: 15px;
+  font-weight: bold;
 }
