@@ -1,9 +1,4 @@
-  background: #f4f4f4;
-}
-
-header {
-  background: #2ecc71;
-  color: white;
+ body {
   display: flex;
   justify-content: space-between;
   padding: 1rem;
@@ -62,9 +57,3 @@ footer {
   padding: 10px;
 }
 
-/* script.js */
-function calcularImpacto() {
-  let kg = document.getElementById('kg').value;
-  let ahorro = kg * 2; // ejemplo simple
-  document.getElementById('resultado').innerText =
-    `Has ahorra
