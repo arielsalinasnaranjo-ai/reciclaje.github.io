@@ -1,107 +1,198 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reciclaje Verde</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f0fdf4;
-            color: #1b4332;
-        }
-        header {
-            background: linear-gradient(135deg, #2d6a4f, #40916c);
-            color: white;
-            padding: 40px;
-            text-align: center;
-        }
-        section {
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .cards {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            width: 250px;
-            padding: 20px;
-            transition: transform 0.3s;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-        }
-        .icon {
-            font-size: 50px;
-        }
-        footer {
-            background: #1b4332;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-        button {
-            background: #52b788;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-        button:hover {
-            background: #40916c;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoRecicla | Cuidemos el planeta</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2d6a4f;
+      --secondary: #40916c;
+      --accent: #52b788;
+      --light: #f8f9fa;
+      --dark: #1b4332;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background: var(--accent);
+      padding: 12px 25px;
+      border-radius: 30px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--secondary);
+    }
+
+    section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+    }
+
+    .icon {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .about {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .about img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 30px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <header>
-    <h1>♻️ Reciclaje Verde</h1>
-    <p>Cuidemos el planeta juntos</p>
+  <h1>♻️ EcoRecicla</h1>
+  <p>Transformando residuos en futuro</p>
+  <a href="#reciclaje" class="btn">Aprender más</a>
 </header>
 
-<section>
-    <h2>¿Por qué reciclar?</h2>
-    <p>El reciclaje ayuda a reducir la contaminación, ahorrar recursos y proteger el medio ambiente.</p>
-</section>
+<section id="reciclaje">
+  <div class="section-title">
+    <h2>Tipos de Reciclaje</h2>
+  </div>
 
-<section>
-    <h2>Tipos de reciclaje</h2>
-    <div class="cards">
-        <div class="card">
-            <div class="icon">🧴</div>
-            <h3>Plástico</h3>
-            <p>Botellas, envases y bolsas.</p>
-        </div>
-        <div class="card">
-            <div class="icon">📄</div>
-            <h3>Papel</h3>
-            <p>Revistas, diarios y cartón.</p>
-        </div>
-        <div class="card">
-            <div class="icon">🍾</div>
-            <h3>Vidrio</h3>
-            <p>Botellas y frascos.</p>
-        </div>
+  <div class="cards">
+    <div class="card">
+      <div class="icon">🧴</div>
+      <h3>Plástico</h3>
+      <p>Reduce el uso de plásticos y recicla botellas y envases.</p>
     </div>
+
+    <div class="card">
+      <div class="icon">📄</div>
+      <h3>Papel</h3>
+      <p>Reutiliza papel y cartón para salvar árboles.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🍾</div>
+      <h3>Vidrio</h3>
+      <p>El vidrio es 100% reciclable sin perder calidad.</p>
+    </div>
+  </div>
 </section>
 
 <section>
-    <h2>Haz tu parte</h2>
-    <p>Empieza hoy separando tus residuos en casa.</p>
-    <button onclick="alert('¡Gracias por ayudar al planeta! 🌎')">Comenzar</button>
+  <div class="about">
+    <img src="https://images.unsplash.com/photo-1528323273322-d81458248d40" alt="reciclaje">
+    <div class="about-text">
+      <h2>¿Por qué es importante reciclar?</h2>
+      <p>
+        El reciclaje reduce la contaminación, conserva recursos naturales
+        y disminuye la cantidad de residuos que terminan en vertederos.
+        Cada pequeña acción cuenta para proteger nuestro planeta.
+      </p>
+      <br>
+      <a href="#" class="btn" onclick="alert('¡Gracias por reciclar! 🌎')">Empieza ahora</a>
+    </div>
+  </div>
 </section>
 
 <footer>
-    <p>© 2026 Reciclaje Verde</p>
+  <p>© 2026 EcoRecicla | Diseño moderno y sustentable</p>
 </footer>
 
 </body>
