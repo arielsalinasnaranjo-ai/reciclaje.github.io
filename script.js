@@ -1,21 +1,19 @@
-function calcularImpacto() {
-  const kg = document.getElementById("kg").value;
+function toggleMenu(){
+  document.getElementById('nav').classList.toggle('active');
+}
 
-  if (kg === "" || kg <= 0) {
-    document.getElementById("resultado").innerText = "Ingresa un valor válido";
-    return;
+function calcular(){
+  let kg = document.getElementById('kg').value;
+  let resultado = document.getElementById('resultado');
+
+  if(kg > 0){
+    resultado.innerText = `Estimación: ${kg * 0.8} kg valorizables.`;
+  } else {
+    resultado.innerText = 'Ingrese un valor válido';
   }
-
-  const ahorroCO2 = kg * 1.5; // estimación simple
-
-  document.getElementById("resultado").innerText =
-    `Has reducido aproximadamente ${ahorroCO2.toFixed(2)} kg de CO2 🌱`;
 }
 
-function enviarFormulario(e) {
+function enviar(e){
   e.preventDefault();
-  alert("Mensaje enviado correctamente ✅");
-}
-function toggleMenu() {
-  document.getElementById("nav").classList.toggle("active");
+  alert('Solicitud enviada correctamente');
 }
