@@ -307,36 +307,102 @@ footer {
   color: white;
 }
 
-/* ================= RESPONSIVE ================= */
+/* ================= MOBILE RESPONSIVE ================= */
+
 @media (max-width: 768px) {
 
+  /* HEADER */
+  header {
+    padding: 12px 15px;
+  }
+
+  .logo span {
+    font-size: 0.9rem;
+  }
+
+  /* NAV FULLSCREEN */
   nav {
-    position: absolute;
-    top: 70px;
+    position: fixed;
+    top: 0;
     right: 0;
+    height: 100vh;
+    width: 70%;
     background: var(--dark);
     flex-direction: column;
-    width: 200px;
-    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
     transform: translateX(100%);
     transition: 0.3s;
+  }
+
+  nav a {
+    font-size: 1.2rem;
   }
 
   nav.active {
     transform: translateX(0);
   }
 
-  .menu-toggle {
-    display: block;
+  /* HERO */
+  .hero {
+    height: auto;
+    padding: 100px 20px 60px;
   }
 
+  .hero h2 {
+    font-size: 1.6rem;
+    line-height: 1.3;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+    margin-top: 10px;
+  }
+
+  /* BOTÓN */
+  .btn {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+
+  /* SECCIONES */
+  .section {
+    padding: 40px 15px;
+  }
+
+  .section h2 {
+    font-size: 1.4rem;
+  }
+
+  /* CARDS */
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  /* FORM */
+  input, textarea {
+    font-size: 16px; /* evita zoom en iPhone */
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* SOCIAL */
   .social-floating {
-    right: 8px;
+    right: 5px;
   }
 
   .social-floating a {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
+    font-size: 0.8rem;
   }
 }
 
