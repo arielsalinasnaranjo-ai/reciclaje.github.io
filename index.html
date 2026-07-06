@@ -5,15 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>URT Industrial SPA — Gestión Integral de Excedentes</title>
   
-    <!-- Favicon -->
+  <!-- Favicon -->
   <link rel="icon" href="logo.jpeg" sizes="35x35">
-
   <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Iconos -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <!-- Iconos (FontAwesome 6.5.2 estable sin integrity para garantizar carga local y remota) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
     :root {
       --primary: #0F2A32;
@@ -31,58 +30,80 @@
       --border: #DCE3E6;
       --border-light: #E8EDEF;
       --glass: rgba(255, 255, 255, 0.08);
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-      --shadow-md: 0 8px 30px rgba(0,0,0,0.08);
-      --shadow-lg: 0 20px 60px rgba(0,0,0,0.12);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.1);
       --shadow-glow: 0 0 40px rgba(0, 168, 120, 0.15);
       --radius-sm: 8px;
       --radius-md: 16px;
       --radius-lg: 24px;
       --radius-xl: 32px;
-      --transition-fast: 0.2s ease;
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    /* ========== RESET ========== */
+    /* ========== RESET & BASE ========== */
     *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     html {
       scroll-behavior: smooth;
       scroll-padding-top: 90px;
     }
-
     body {
       font-family: 'Inter', 'Poppins', sans-serif;
       background: var(--light);
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-
+    /* ========== SCROLLBAR PERSONALIZADA ========== */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--dark);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border: 2px solid var(--dark);
+      border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
     /* ========== UTILIDADES ========== */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
     }
-
+    /* Sentinel para Header */
+    #top-sentinel {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1px;
+      height: 1px;
+      pointer-events: none;
+      visibility: hidden;
+    }
+    /* Scroll Reveal con CSS */
     .reveal {
       opacity: 0;
-      transform: translateY(40px);
+      transform: translateY(30px);
       transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
                   transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, opacity;
     }
-
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
     }
-
     /* ========== HEADER ========== */
     header {
       position: fixed;
@@ -93,32 +114,29 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 30px;
-      background: rgba(10, 26, 31, 0.85);
+      padding: 20px 30px;
+      background: rgba(10, 26, 31, 0.75);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      transition: all var(--transition-normal);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: padding var(--transition-normal), background var(--transition-normal), box-shadow var(--transition-normal);
     }
-
     header.scrolled {
-      padding: 10px 30px;
+      padding: 12px 30px;
       background: rgba(10, 26, 31, 0.95);
-      box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+      box-shadow: var(--shadow-md);
     }
-
     .logo {
       display: flex;
       align-items: center;
       gap: 12px;
       cursor: pointer;
+      text-decoration: none;
       transition: transform var(--transition-fast);
     }
-
     .logo:hover {
       transform: scale(1.02);
     }
-
     .logo img {
       width: 42px;
       height: 42px;
@@ -126,19 +144,17 @@
       object-fit: cover;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
-
     .logo span {
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
       font-size: 1.15rem;
       letter-spacing: 0.5px;
       color: white;
-      background: linear-gradient(135deg, #fff 0%, var(--accent-soft) 100%);
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent-soft) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
     /* NAV */
     nav {
       display: flex;
@@ -146,19 +162,17 @@
       margin-left: auto;
       align-items: center;
     }
-
     nav a {
       position: relative;
       font-weight: 500;
       font-size: 0.92rem;
-      color: rgba(255,255,255,0.75);
+      color: rgba(255, 255, 255, 0.8);
       text-decoration: none;
       padding: 8px 16px;
       border-radius: var(--radius-sm);
       transition: all var(--transition-fast);
       letter-spacing: 0.3px;
     }
-
     nav a::after {
       content: '';
       position: absolute;
@@ -171,16 +185,13 @@
       transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       border-radius: 2px;
     }
-
     nav a:hover {
       color: white;
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
     }
-
     nav a:hover::after {
       width: 60%;
     }
-
     /* Botón CTA en nav */
     .nav-cta {
       background: linear-gradient(135deg, var(--accent), var(--accent-soft)) !important;
@@ -192,32 +203,29 @@
       box-shadow: 0 4px 15px rgba(0, 168, 120, 0.3);
       transition: all var(--transition-normal) !important;
     }
-
     .nav-cta::after {
       display: none !important;
     }
-
     .nav-cta:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(0, 168, 120, 0.4);
       background: linear-gradient(135deg, var(--accent-soft), var(--accent)) !important;
     }
-
     /* MENU MOBILE */
     .menu-toggle {
       display: none;
       font-size: 1.4rem;
       cursor: pointer;
       color: white;
+      background: transparent;
+      border: none;
       padding: 8px;
       border-radius: var(--radius-sm);
       transition: background var(--transition-fast);
     }
-
     .menu-toggle:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.1);
     }
-
     /* ========== HERO ========== */
     .hero {
       position: relative;
@@ -228,34 +236,40 @@
       text-align: center;
       color: white;
       overflow: hidden;
-      background: linear-gradient(135deg, rgba(10,26,31,0.92), rgba(15,42,50,0.95)),
-                  url('https://images.unsplash.com/photo-1581091870627-3a5b7f0f7b63?w=1920&q=80');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      background-color: var(--dark);
     }
-
-    /* Partículas decorativas */
-    .hero::before {
-      content: '';
+    .hero-video {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(0, 168, 120, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(110, 211, 177, 0.06) 0%, transparent 50%);
+      object-fit: cover;
+      z-index: 0;
       pointer-events: none;
     }
-
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10, 26, 31, 0.85), rgba(15, 42, 50, 0.9));
+      z-index: 1;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 168, 120, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(110, 211, 177, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 2;
+    }
     .hero-content {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       max-width: 800px;
       padding: 0 24px;
     }
-
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -269,13 +283,12 @@
       font-weight: 500;
       margin-bottom: 24px;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       animation: fadeUp 0.8s ease-out 0.2s both;
     }
-
     .hero-badge i {
       font-size: 0.75rem;
     }
-
     .hero h2 {
       font-family: 'Poppins', sans-serif;
       font-size: clamp(2rem, 5vw, 3.5rem);
@@ -286,24 +299,21 @@
       animation: slideLeft 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
       opacity: 0;
     }
-
     .hero h2 .highlight {
       background: linear-gradient(135deg, var(--accent), var(--accent-soft));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
     .hero p {
       font-size: clamp(1rem, 2vw, 1.25rem);
-      color: rgba(255,255,255,0.75);
+      color: rgba(255, 255, 255, 0.75);
       max-width: 600px;
       margin: 0 auto 32px;
       line-height: 1.7;
       animation: slideRight 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
       opacity: 0;
     }
-
     .hero .btn-group {
       display: flex;
       gap: 16px;
@@ -312,56 +322,52 @@
       animation: fadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
       opacity: 0;
     }
-
     /* Scroll indicator */
     .scroll-indicator {
       position: absolute;
       bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255, 255, 255, 0.45);
       font-size: 0.75rem;
       letter-spacing: 2px;
       text-transform: uppercase;
       animation: bounce 2s infinite;
       cursor: pointer;
+      background: transparent;
+      border: none;
+      outline: none;
       transition: color var(--transition-fast);
     }
-
     .scroll-indicator:hover {
       color: var(--accent-soft);
     }
-
     .scroll-indicator i {
       font-size: 1.2rem;
     }
-
     @keyframes bounce {
       0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-      40% { transform: translateX(-50%) translateY(-10px); }
-      60% { transform: translateX(-50%) translateY(-5px); }
+      40% { transform: translateX(-50%) translateY(-8px); }
+      60% { transform: translateX(-50%) translateY(-4px); }
     }
-
     /* ========== KEYFRAMES ========== */
     @keyframes slideLeft {
-      from { opacity: 0; transform: translateX(-80px); }
+      from { opacity: 0; transform: translateX(-40px); }
       to { opacity: 1; transform: translateX(0); }
     }
-
     @keyframes slideRight {
-      from { opacity: 0; transform: translateX(80px); }
+      from { opacity: 0; transform: translateX(40px); }
       to { opacity: 1; transform: translateX(0); }
     }
-
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     /* ========== BOTONES ========== */
     .btn {
       display: inline-flex;
@@ -378,13 +384,11 @@
       position: relative;
       overflow: hidden;
     }
-
     .btn-primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-soft));
       color: white;
-      box-shadow: 0 4px 20px rgba(0, 168, 120, 0.35);
+      box-shadow: 0 4px 20px rgba(0, 168, 120, 0.3);
     }
-
     .btn-primary::before {
       content: '';
       position: absolute;
@@ -392,64 +396,39 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transition: left 0.6s ease;
     }
-
     .btn-primary:hover::before {
       left: 100%;
     }
-
     .btn-primary:hover {
       transform: translateY(-3px);
       box-shadow: 0 8px 30px rgba(0, 168, 120, 0.45);
     }
-
     .btn-outline {
       background: transparent;
       color: white;
-      border: 2px solid rgba(255,255,255,0.25);
+      border: 2px solid rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-
     .btn-outline:hover {
       border-color: var(--accent-soft);
       color: var(--accent-soft);
       transform: translateY(-3px);
       background: rgba(0, 168, 120, 0.08);
     }
-
-    button {
-      border-radius: 50px;
-      padding: 12px 28px;
-      border: none;
-      cursor: pointer;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: all var(--transition-normal);
-      box-shadow: var(--shadow-sm);
-    }
-
-    button:hover {
-      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 168, 120, 0.3);
-    }
-
     /* ========== SECCIONES ========== */
     .section {
       padding: 100px 20px;
       text-align: center;
       position: relative;
     }
-
     .section-header {
       max-width: 700px;
       margin: 0 auto 60px;
     }
-
     .section-header h2 {
       font-family: 'Poppins', sans-serif;
       font-size: clamp(1.8rem, 4vw, 2.8rem);
@@ -458,13 +437,11 @@
       color: var(--text);
       letter-spacing: -0.5px;
     }
-
     .section-header p {
       color: var(--text-light);
       font-size: 1.1rem;
       line-height: 1.7;
     }
-
     .section-header .line {
       width: 60px;
       height: 4px;
@@ -472,20 +449,16 @@
       border-radius: 2px;
       margin: 20px auto 0;
     }
-
     .dark {
       background: var(--dark);
       color: white;
     }
-
     .dark .section-header h2 {
       color: white;
     }
-
     .dark .section-header p {
-      color: rgba(255,255,255,0.6);
+      color: rgba(255, 255, 255, 0.6);
     }
-
     /* ========== CARDS ========== */
     .cards {
       display: grid;
@@ -496,7 +469,6 @@
       margin-left: auto;
       margin-right: auto;
     }
-
     .card {
       cursor: pointer;
       background: var(--lighter);
@@ -507,10 +479,12 @@
       transition: all var(--transition-normal);
       position: relative;
       overflow: hidden;
-      opacity: 0;
-      transform: translateY(30px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      text-decoration: none;
     }
-
     .card::before {
       content: '';
       position: absolute;
@@ -523,49 +497,37 @@
       transform-origin: left;
       transition: transform var(--transition-normal);
     }
-
     .card:hover::before {
       transform: scaleX(1);
     }
-
     .card:hover {
       transform: translateY(-8px);
       box-shadow: var(--shadow-lg);
       border-color: var(--accent-soft);
     }
-
-    .card.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     .card-icon {
       width: 64px;
       height: 64px;
       border-radius: var(--radius-md);
-      background: linear-gradient(135deg, var(--accent-glow), rgba(0,168,120,0.05));
+      background: linear-gradient(135deg, var(--accent-glow), rgba(0, 168, 120, 0.05));
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 20px;
+      margin-bottom: 20px;
       transition: all var(--transition-normal);
     }
-
     .card:hover .card-icon {
       background: linear-gradient(135deg, var(--accent), var(--accent-soft));
       transform: scale(1.1) rotate(-5deg);
     }
-
     .card-icon i {
       font-size: 1.6rem;
       color: var(--accent);
       transition: color var(--transition-normal);
     }
-
     .card:hover .card-icon i {
       color: white;
     }
-
     .card h3 {
       font-family: 'Poppins', sans-serif;
       font-size: 1.15rem;
@@ -573,13 +535,12 @@
       margin-bottom: 12px;
       color: var(--text);
     }
-
     .card p {
       color: var(--text-light);
       font-size: 0.92rem;
       line-height: 1.6;
+      flex-grow: 1;
     }
-
     .card-arrow {
       margin-top: 16px;
       color: var(--accent);
@@ -592,57 +553,143 @@
       transform: translateX(-10px);
       transition: all var(--transition-normal);
     }
-
     .card:hover .card-arrow {
       opacity: 1;
       transform: translateX(0);
     }
-
+    /* ========== SECCIÓN CLIENTES (Social Proof) ========== */
+    .client-logos {
+      padding: 60px 20px;
+      background: var(--lighter);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .logos-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 35px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .logos-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 45px;
+      flex-wrap: wrap;
+    }
+    .logo-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      color: var(--text-light);
+      font-size: 1.1rem;
+      opacity: 0.65;
+      transition: all var(--transition-normal);
+    }
+    .logo-item img {
+      height: 45px;
+      max-width: 160px;
+      object-fit: contain;
+      filter: grayscale(100%);
+      opacity: 0.75;
+      transition: all var(--transition-normal);
+    }
+    .logo-item:hover img {
+      filter: grayscale(0%);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    .logo-item i {
+      font-size: 1.4rem;
+      color: var(--text-muted);
+      transition: color var(--transition-normal);
+    }
+    .logo-item:hover {
+      color: var(--primary);
+      transform: translateY(-3px);
+      opacity: 1;
+    }
+    .logo-item:hover i {
+      color: var(--accent);
+    }
     /* ========== CALCULADORA ========== */
     .calculator-box {
-      max-width: 500px;
+      max-width: 550px;
       margin: 0 auto;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-lg);
       padding: 40px;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-
-    .calculator-box .input-group {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .calculator-box input {
-      flex: 1;
-      min-width: 200px;
+    .calculator-box select {
+      width: 100%;
       padding: 14px 20px;
       border-radius: 50px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(10, 26, 31, 0.95);
       color: white;
       font-size: 1rem;
       outline: none;
+      cursor: pointer;
+      font-family: inherit;
       transition: all var(--transition-fast);
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 20px center;
+      background-size: 18px;
     }
-
-    .calculator-box input::placeholder {
-      color: rgba(255,255,255,0.4);
-    }
-
-    .calculator-box input:focus {
+    .calculator-box select:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px rgba(0, 168, 120, 0.15);
-      background: rgba(255,255,255,0.08);
     }
-
+    .calculator-box input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.15);
+      outline: none;
+      margin: 12px 0;
+    }
+    .calculator-box input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 168, 120, 0.5);
+      transition: transform 0.1s ease;
+    }
+    .calculator-box input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+    .calculator-box input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border: none;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 168, 120, 0.5);
+      transition: transform 0.1s ease;
+    }
+    .calculator-box input[type="range"]::-moz-range-thumb:hover {
+      transform: scale(1.25);
+    }
     #resultado {
-      margin-top: 20px;
-      padding: 16px 24px;
+      margin-top: 24px;
+      padding: 20px 24px;
       border-radius: var(--radius-md);
       background: linear-gradient(135deg, rgba(0,168,120,0.15), rgba(110,211,177,0.1));
       border: 1px solid rgba(0,168,120,0.2);
@@ -650,21 +697,77 @@
       font-weight: 500;
       min-height: 56px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       transition: all var(--transition-normal);
-    }
-
-    #resultado:empty {
       opacity: 0;
+      transform: translateY(10px);
     }
-
+    #resultado.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* ========== PREGUNTAS FRECUENTES (FAQs) ========== */
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 12px 0;
+    }
+    .faq-question {
+      width: 100%;
+      background: transparent !important;
+      border: none;
+      color: white;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      padding: 18px 0;
+      box-shadow: none !important;
+      border-radius: 0;
+      transition: color var(--transition-fast);
+    }
+    .faq-question:hover {
+      color: var(--accent-soft);
+      transform: none;
+      box-shadow: none;
+    }
+    .faq-question i {
+      font-size: 0.95rem;
+      transition: transform var(--transition-normal);
+      color: var(--accent-soft);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition-normal) ease-out;
+    }
+    .faq-answer p {
+      padding: 0 0 18px 0;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+    .faq-item.active .faq-answer {
+      max-height: 250px;
+    }
+    .faq-item.active .faq-question i {
+      transform: rotate(45deg);
+      color: var(--accent);
+    }
     /* ========== FORMULARIO ========== */
     .contact-wrapper {
       max-width: 600px;
       margin: 0 auto;
     }
-
     .contact-form {
       background: var(--lighter);
       border-radius: var(--radius-lg);
@@ -672,20 +775,17 @@
       box-shadow: var(--shadow-md);
       border: 1px solid var(--border-light);
     }
-
     .form-group {
       margin-bottom: 20px;
       text-align: left;
     }
-
     .form-group label {
       display: block;
       margin-bottom: 8px;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 0.9rem;
       color: var(--text);
     }
-
     .form-group input,
     .form-group textarea {
       width: 100%;
@@ -699,70 +799,72 @@
       outline: none;
       transition: all var(--transition-fast);
     }
-
     .form-group input:focus,
     .form-group textarea:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent-glow);
       background: white;
     }
-
     .form-group textarea {
       min-height: 120px;
       resize: vertical;
     }
-
     .form-group input::placeholder,
     .form-group textarea::placeholder {
       color: var(--text-muted);
     }
-
     .form-submit {
       width: 100%;
       padding: 16px;
       font-size: 1rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-weight: 600;
+      transition: all var(--transition-normal);
+      box-shadow: var(--shadow-sm);
     }
-
+    .form-submit:hover {
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 168, 120, 0.3);
+    }
     /* ========== FOOTER ========== */
     footer {
       background: var(--darker);
-      color: rgba(255,255,255,0.5);
+      color: rgba(255, 255, 255, 0.5);
       text-align: center;
-      padding: 40px 20px;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 60px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
-
     footer .footer-logo {
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: white;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
-
     footer .footer-links {
       display: flex;
       justify-content: center;
       gap: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       flex-wrap: wrap;
     }
-
     footer .footer-links a {
-      color: rgba(255,255,255,0.5);
+      color: rgba(255, 255, 255, 0.6);
       text-decoration: none;
       font-size: 0.9rem;
       transition: color var(--transition-fast);
     }
-
     footer .footer-links a:hover {
       color: var(--accent-soft);
     }
-
     footer p {
       font-size: 0.85rem;
     }
-
     /* ========== REDES FLOTANTES ========== */
     .social-floating {
       position: fixed;
@@ -774,7 +876,6 @@
       gap: 14px;
       z-index: 999;
     }
-
     .social-floating a {
       position: relative;
       width: 48px;
@@ -784,48 +885,41 @@
       justify-content: center;
       border-radius: 50%;
       text-decoration: none;
-      font-size: 1.1rem;
+      font-size: 1.2rem; /* Tamaño de icono ligeramente mayor */
       background: var(--primary);
       color: white;
       border: none;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
       transition: all var(--transition-normal);
-      overflow: hidden;
       opacity: 0;
       transform: translateX(40px);
-      animation: slideIn 0.6s forwards;
+      animation: slideIn 0.6s forwards cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    .social-floating a:nth-child(1){ animation-delay: 0.3s; }
-    .social-floating a:nth-child(2){ animation-delay: 0.5s; }
-    .social-floating a:nth-child(3){ animation-delay: 0.7s; }
-
+    .social-floating a:nth-child(1) { animation-delay: 0.3s; }
+    .social-floating a:nth-child(2) { animation-delay: 0.5s; }
+    .social-floating a:nth-child(3) { animation-delay: 0.7s; }
     @keyframes slideIn {
       to { opacity: 1; transform: translateX(0); }
     }
-
     .social-floating a:hover {
       transform: translateX(-8px) scale(1.12);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      color: white;
     }
-
     .social-floating a:nth-child(1):hover { background: #0077b5; }
     .social-floating a:nth-child(2):hover { background: #25D366; }
     .social-floating a:nth-child(3):hover { background: radial-gradient(circle at 30% 30%, #feda75, #d62976, #962fbf); }
-
     .social-floating a i {
       transition: transform var(--transition-fast);
     }
-
     .social-floating a:hover i {
-      transform: rotate(10deg) scale(1.15);
+      transform: rotate(10deg) scale(1.1);
     }
-
     .social-floating a::after {
       content: attr(data-name);
       position: absolute;
       right: 60px;
-      background: rgba(0,0,0,0.85);
+      background: rgba(10, 26, 31, 0.95);
       color: white;
       padding: 6px 14px;
       border-radius: 8px;
@@ -837,141 +931,117 @@
       white-space: nowrap;
       pointer-events: none;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-sm);
     }
-
     .social-floating a:hover::after {
       opacity: 1;
       transform: translateX(0);
     }
-
     /* ========== RESPONSIVE ========== */
     @media (max-width: 768px) {
       header {
+        padding: 16px 20px;
+      }
+      header.scrolled {
         padding: 12px 20px;
       }
-
-      header.scrolled {
-        padding: 10px 20px;
-      }
-
       nav {
         position: absolute;
         top: 70px;
         right: 0;
         background: rgba(10, 26, 31, 0.98);
         backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         flex-direction: column;
         width: 260px;
         padding: 24px;
         gap: 4px;
-        transform: translateX(100%);
+        transform: translateX(105%);
         transition: transform var(--transition-normal);
         border-radius: 0 0 0 var(--radius-md);
-        border-left: 1px solid rgba(255,255,255,0.05);
-        border-bottom: 1px solid rgba(255,255,255,0.05);
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow-lg);
       }
-
       nav.active {
         transform: translateX(0);
       }
-
       nav a {
         padding: 12px 16px;
         border-radius: var(--radius-sm);
         width: 100%;
         text-align: left;
       }
-
-      nav a:hover {
-        background: rgba(255,255,255,0.08);
+      nav a::after {
+        display: none;
       }
-
+      nav a:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
       .nav-cta {
         margin-left: 0;
         margin-top: 8px;
         text-align: center !important;
       }
-
       .menu-toggle {
         display: flex;
         align-items: center;
         justify-content: center;
       }
-
-      .hero {
-        background-attachment: scroll;
-      }
-
       .hero .btn-group {
         flex-direction: column;
         align-items: center;
+        width: 100%;
       }
-
       .btn {
         width: 100%;
         max-width: 280px;
         justify-content: center;
       }
-
       .section {
         padding: 70px 16px;
       }
-
       .cards {
         grid-template-columns: 1fr;
         gap: 16px;
       }
-
-      .card {
-        padding: 24px 20px;
+      .logos-grid {
+        gap: 30px;
       }
-
+      .logo-item {
+        font-size: 1rem;
+      }
       .calculator-box {
         padding: 28px 20px;
       }
-
-      .calculator-box .input-group {
-        flex-direction: column;
-      }
-
-      .calculator-box input {
-        width: 100%;
-      }
-
       .contact-form {
         padding: 28px 20px;
       }
-
       .social-floating {
         right: 10px;
         gap: 10px;
       }
-
       .social-floating a {
         width: 40px;
         height: 40px;
         font-size: 1rem;
       }
-
       .social-floating a::after {
         display: none;
       }
     }
-
     @media (max-width: 480px) {
       .hero h2 {
         font-size: 1.8rem;
       }
-
       .section-header h2 {
         font-size: 1.6rem;
       }
-
       .logo span {
         font-size: 1rem;
       }
     }
-
     /* ========== LOADING OVERLAY ========== */
     .loading-overlay {
       position: fixed;
@@ -986,13 +1056,11 @@
       justify-content: center;
       transition: opacity 0.6s ease, visibility 0.6s ease;
     }
-
     .loading-overlay.hidden {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
-
     .loader {
       width: 48px;
       height: 48px;
@@ -1001,318 +1069,511 @@
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
-
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
   </style>
-<base target="_blank">
+  <base target="_blank">
 </head>
 <body>
-
+<!-- Sentinel para detectar el scroll en Header sin ralentizar el scroll -->
+<div id="top-sentinel"></div>
 <!-- Loading Overlay -->
 <div class="loading-overlay" id="loader">
-  <div class="loader"></div>
+  <div class="loader" aria-label="Cargando"></div>
 </div>
-
 <!-- Redes Sociales Flotantes -->
 <div class="social-floating">
   <a href="#" target="_blank" data-name="LinkedIn" aria-label="LinkedIn">
     <i class="fab fa-linkedin-in"></i>
   </a>
-  <a href="https://wa.me/56926355381?text=Hola,%20necesito%20asesoría" target="_blank" data-name="WhatsApp" aria-label="WhatsApp">
+  <a href="https://wa.me/56974826812?text=Hola,%20necesito%20asesoría" target="_blank" data-name="WhatsApp" aria-label="WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
   <a href="https://www.instagram.com/urt.industrial?igsh=MWsxMmU5eGtsaXpnZw==" target="_blank" data-name="Instagram" aria-label="Instagram">
     <i class="fab fa-instagram"></i>
   </a>
 </div>
-
 <!-- Header -->
 <header id="header">
-  <a href="#inicio" class="logo">
-    <img src="logo.jpeg" alt="URT Industrial">
+  <a href="#inicio" class="logo" target="_self">
+    <img src="logo.jpeg" alt="Logotipo de URT Industrial">
     <span>URT Industrial SPA</span>
   </a>
-
   <nav id="nav">
-    <a href="#inicio">Inicio</a>
-    <a href="#info">Servicios</a>
-    <a href="#calculadora">Evaluación</a>
-    <a href="#contacto" class="nav-cta">Contacto</a>
+    <a href="#inicio" target="_self">Inicio</a>
+    <a href="#info" target="_self">Servicios</a>
+    <a href="#calculadora" target="_self">Evaluación</a>
+    <a href="#faqs" target="_self">Preguntas Frecuentes</a>
+    <a href="#contacto" class="nav-cta" target="_self">Contacto</a>
   </nav>
-
-  <div class="menu-toggle" id="menu-toggle" aria-label="Menú">
+  <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav">
     <i class="fas fa-bars"></i>
-  </div>
+  </button>
 </header>
-
-<!-- Hero -->
-<section id="inicio" class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">
-      <i class="fas fa-leaf"></i>
-      <span>Soluciones Sustentables</span>
+<main id="contenido-principal">
+  <!-- Hero -->
+  <section id="inicio" class="hero">
+    <!-- Video de fondo -->
+    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+      <source src="IMG_1302.MP4" type="video/mp4">
+    </video>
+    <!-- Capa oscura -->
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-leaf"></i>
+        <span>Soluciones Sustentables</span>
+      </div>
+      <h2>
+        Gestión Integral de<br>
+        <span class="highlight">Excedentes Industriales</span>
+      </h2>
+      <p>
+        Soluciones especializadas para el tratamiento,
+        valorización y trazabilidad completa de residuos
+        industriales. Cumplimiento normativo garantizado.
+      </p>
+      <div class="btn-group">
+        <a href="#contacto" class="btn btn-primary" target="_self">
+          <i class="fas fa-paper-plane"></i>
+          Solicitar Asesoría
+        </a>
+        <a href="#info" class="btn btn-outline" target="_self">
+          <i class="fas fa-arrow-down"></i>
+          Conocer Servicios
+        </a>
+      </div>
     </div>
-    <h2>
-      Gestión Integral de<br>
-      <span class="highlight">Excedentes Industriales</span>
-    </h2>
-    <p>Soluciones especializadas para el tratamiento, valorización y trazabilidad completa de residuos industriales. Cumplimiento normativo garantizado.</p>
-    <div class="btn-group">
-      <a href="#contacto" class="btn btn-primary">
-        <i class="fas fa-paper-plane"></i>
-        Solicitar Asesoría
-      </a>
-      <a href="#info" class="btn btn-outline">
-        <i class="fas fa-arrow-down"></i>
-        Conocer Servicios
-      </a>
+    <button class="scroll-indicator" aria-label="Desplazarse a la sección de servicios" onclick="document.getElementById('info').scrollIntoView({behavior:'smooth'})">
+      <span>Scroll</span>
+      <i class="fas fa-chevron-down"></i>
+    </button>
+  </section>
+  <!-- Servicios -->
+  <section id="info" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Nuestros Servicios</h2>
+        <p>Ofrecemos soluciones integrales para la gestión responsable de residuos industriales, asegurando cumplimiento normativo y sostenibilidad.</p>
+        <div class="line"></div>
+      </div>
+      <div class="cards">
+        <a href="servicio-residuos.html" class="card reveal">
+          <div class="card-icon">
+            <i class="fas fa-industry"></i>
+          </div>
+          <h3>Gestión Integral de Residuos</h3>
+          <p>Recolección, transporte y disposición certificada de residuos industriales con total trazabilidad.</p>
+          <span class="card-arrow">Ver más <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="servicio-normativa.html" class="card reveal">
+          <div class="card-icon">
+            <i class="fas fa-file-contract"></i>
+          </div>
+          <h3>Asesoría Normativa Ambiental</h3>
+          <p>Cumplimiento legal, auditorías ambientales y gestión de permisos sectoriales.</p>
+          <span class="card-arrow">Ver más <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="servicio-valorizacion.html" class="card reveal">
+          <div class="card-icon">
+            <i class="fas fa-recycle"></i>
+          </div>
+          <h3>Valorización de Residuos</h3>
+          <p>Transformación de residuos en recursos útiles mediante procesos innovadores y sostenibles.</p>
+          <span class="card-arrow">Ver más <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a href="servicio-trazabilidad.html" class="card reveal">
+          <div class="card-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Trazabilidad y Reportabilidad</h3>
+          <p>Seguimiento completo en tiempo real y reportes normativos automatizados.</p>
+          <span class="card-arrow">Ver más <i class="fas fa-arrow-right"></i></span>
+        </a>
+      </div>
     </div>
-  </div>
-  <div class="scroll-indicator" onclick="document.getElementById('info').scrollIntoView({behavior:'smooth'})">
-    <span>Scroll</span>
-    <i class="fas fa-chevron-down"></i>
-  </div>
-</section>
-
-<!-- Servicios -->
-<section id="info" class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <h2>Nuestros Servicios</h2>
-      <p>Ofrecemos soluciones integrales para la gestión responsable de residuos industriales, asegurando cumplimiento normativo y sostenibilidad.</p>
-      <div class="line"></div>
-    </div>
-
-    <div class="cards">
-      <div class="card reveal" onclick="location.href='servicio-residuos.html'">
-        <div class="card-icon">
-          <i class="fas fa-industry"></i>
+  </section>
+  <!-- Sección de Aliados / Confianza comercial (Social Proof) -->
+  <!--
+  <section class="section client-logos reveal">
+    <div class="container">
+      
+      <p class="logos-title">Empresas que confían en nuestra gestión</p>
+      <div class="logos-grid">
+        <div class="logo-item" style="opacity: 1;">
+          <img src="https://extruder.cl/wp-content/uploads/2024/03/cropped-extruder.png" alt="Logo Extruder">
         </div>
-        <h3>Gestión Integral de Residuos</h3>
-        <p>Recolección, transporte y disposición certificada de residuos industriales con total trazabilidad.</p>
-        <span class="card-arrow">Ver más <i class="fas fa-arrow-right"></i></span>
-      </div>
-
-      <div class="card reveal" onclick="location.href='servicio-normativa.html'">
-        <div class="card-icon">
-          <i class="fas fa-file-contract"></i>
-        </div>
-        <h3>Asesoría Normativa Ambiental</h3>
-        <p>Cumplimiento legal, auditorías ambientales y gestión de permisos sectoriales.</p>
-        <span class="card-arrow">Ver más <i class="fas fa-arrow-right"></i></span>
-      </div>
-
-      <div class="card reveal" onclick="location.href='servicio-valorizacion.html'">
-        <div class="card-icon">
-          <i class="fas fa-recycle"></i>
-        </div>
-        <h3>Valorización de Residuos</h3>
-        <p>Transformación de residuos en recursos útiles mediante procesos innovadores y sostenibles.</p>
-        <span class="card-arrow">Ver más <i class="fas fa-arrow-right"></i></span>
-      </div>
-
-      <div class="card reveal" onclick="location.href='servicio-trazabilidad.html'">
-        <div class="card-icon">
-          <i class="fas fa-chart-line"></i>
-        </div>
-        <h3>Trazabilidad y Reportabilidad</h3>
-        <p>Seguimiento completo en tiempo real y reportes normativos automatizados.</p>
-        <span class="card-arrow">Ver más <i class="fas fa-arrow-right"></i></span>
+        <div class="logo-item"><i class="fas fa-industry"></i> <span>Aceros del Sur</span></div>
+        <div class="logo-item"><i class="fas fa-recycle"></i> <span>EcoForestal</span></div>
+        <div class="logo-item"><i class="fas fa-oil-can"></i> <span>PetroQuim</span></div>
+        <div class="logo-item"><i class="fas fa-ship"></i> <span>Naviera Austral</span></div>
+        <div class="logo-item"><i class="fas fa-warehouse"></i> <span>LogiTrans</span></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- Calculadora -->
-<section id="calculadora" class="section dark">
-  <div class="container">
-    <div class="section-header reveal">
-      <h2>Evaluación de Residuos</h2>
-      <p>Calcula el potencial de valorización de tus residuos industriales y optimiza tu gestión ambiental.</p>
-      <div class="line"></div>
-    </div>
-
-    <div class="calculator-box reveal">
-      <div class="input-group">
-        <input type="number" id="kg" placeholder="Kg mensuales estimados" min="0" step="0.1">
-        <button onclick="calcular()">
-          <i class="fas fa-calculator"></i> Evaluar
-        </button>
+  </section>
+  -->
+     
+  
+  <!-- Calculadora Interactiva de Residuos -->
+  <section id="calculadora" class="section dark">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Evaluación de Residuos</h2>
+        <p>Calcula el potencial de valorización de tus residuos industriales y optimiza tu gestión ambiental.</p>
+        <div class="line"></div>
       </div>
-      <p id="resultado"></p>
-    </div>
-  </div>
-</section>
-
-<!-- Contacto -->
-<section id="contacto" class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <h2>Contacto Comercial</h2>
-      <p>Completa el formulario y nuestro equipo especializado se contactará contigo a la brevedad.</p>
-      <div class="line"></div>
-    </div>
-
-    <div class="contact-wrapper reveal">
-      <form class="contact-form" onsubmit="enviar(event)">
+      <div class="calculator-box reveal">
         <div class="form-group">
-          <label for="empresa">Empresa</label>
-          <input type="text" id="empresa" placeholder="Nombre de tu empresa" required>
+          <label for="tipo-residuo" style="color: white; font-weight: 600;">Tipo de Residuo Principal</label>
+          <select id="tipo-residuo" onchange="calcular()">
+            <option value="general">Excedentes Generales / Mixtos (80% valorizable)</option>
+            <option value="metales">Metales Ferrosos / No Ferrosos (95% valorizable)</option>
+            <option value="papel">Cartón, Papeles y Embalajes (90% valorizable)</option>
+            <option value="plasticos">Plásticos Industriales (PEAD, PP, PET) (75% valorizable)</option>
+            <option value="madera">Maderas y Pallets Industriales (85% valorizable)</option>
+          </select>
         </div>
-        <div class="form-group">
-          <label for="email">Correo electrónico</label>
-          <input type="email" id="email" placeholder="correo@empresa.cl" required>
+        <div class="form-group" style="margin-top: 25px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; color: white;">
+            <label for="kg" style="font-weight: 600; margin-bottom: 0;">Volumen Mensual Estimado</label>
+            <span id="kg-value" style="font-weight: 700; color: var(--accent-soft); font-size: 1.1rem;">5.000 kg</span>
+          </div>
+          <input type="range" id="kg" min="100" max="25000" step="100" value="5000" oninput="calcular()">
         </div>
-        <div class="form-group">
-          <label for="requerimiento">Requerimiento</label>
-          <textarea id="requerimiento" placeholder="Describe tu necesidad..." required></textarea>
-        </div>
-        <button type="submit" class="form-submit">
-          <i class="fas fa-paper-plane"></i> Enviar Solicitud
-        </button>
-      </form>
+        <div id="resultado" class="show" aria-live="polite"></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+  
+  <!-- cuadro blanco para separar bloques -->
+   <section class="section client-logos reveal">
+    <div class="container">
 
+    </div>
+  </section>
+
+  <!-- FAQs Accordion -->
+  <section id="faqs" class="section dark" style="background: var(--darker); border-top: 1px solid rgba(255,255,255,0.03);">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Preguntas Frecuentes</h2>
+        <p>Resolvemos tus principales dudas sobre la gestión de excedentes y el cumplimiento de la ley REP.</p>
+        <div class="line"></div>
+      </div>
+      <div class="faq-container reveal">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Qué tipo de residuos y excedentes industriales gestionan?</span>
+            <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Gestionamos una amplia gama de excedentes, incluyendo metales ferrosos y no ferrosos, plásticos industriales (PET, PEAD, PP), cartones, papeles, maderas (pallets) y residuos generales no peligrosos. Consúltanos para categorización específica.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Entregan certificados de trazabilidad y valorización?</span>
+            <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Sí, emitimos certificados oficiales de recepción, pesaje, valorización o disposición final. Todos nuestros procesos garantizan la trazabilidad requerida para auditorías ambientales y reportes de sostenibilidad corporativa.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Cómo ayudan a las empresas a cumplir con la Ley REP?</span>
+            <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Asesoramos en la declaración de productos prioritarios, implementamos sistemas de recolección selectiva e informamos los datos de valorización en los sistemas oficiales (Ventanilla Única, RETC), garantizando el cumplimiento pleno de la normativa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Contacto -->
+  <section id="contacto" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2>Contacto Comercial</h2>
+        <p>Completa el formulario y nuestro equipo especializado se contactará contigo a la brevedad.</p>
+        <div class="line"></div>
+      </div>
+      <div class="contact-wrapper reveal">
+        <form class="contact-form" onsubmit="enviar(event)">
+          <div class="form-group">
+            <label for="empresa">Empresa</label>
+            <input type="text" id="empresa" placeholder="Nombre de tu empresa" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" placeholder="correo@empresa.cl" required>
+          </div>
+          <div class="form-group">
+            <label for="requerimiento">Requerimiento</label>
+            <textarea id="requerimiento" placeholder="Describe tu necesidad..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            <i class="fas fa-paper-plane"></i> Enviar Solicitud
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
 <!-- Footer -->
 <footer>
   <div class="footer-logo">URT Industrial SPA</div>
   <div class="footer-links">
-    <a href="#inicio">Inicio</a>
-    <a href="#info">Servicios</a>
-    <a href="#calculadora">Evaluación</a>
-    <a href="#contacto">Contacto</a>
+    <a href="#inicio" target="_self">Inicio</a>
+    <a href="#info" target="_self">Servicios</a>
+    <a href="#calculadora" target="_self">Evaluación</a>
+    <a href="#faqs" target="_self">Preguntas Frecuentes</a>
+    <a href="#contacto" target="_self">Contacto</a>
   </div>
   <p>© 2026 URT Industrial SPA — Todos los derechos reservados</p>
 </footer>
-
 <script>
-  // ========== LOADING ==========
+  // ========== LOADING OVERLAY ==========
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('loader').classList.add('hidden');
-    }, 600);
+    const loader = document.getElementById('loader');
+    if (loader) {
+      setTimeout(() => {
+        loader.classList.add('hidden');
+      }, 500);
+    }
   });
-
-  // ========== HEADER SCROLL ==========
+  // ========== HEADER SCROLL (Usando IntersectionObserver para máximo rendimiento) ==========
   const header = document.getElementById('header');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  });
-
-  // ========== CALCULADORA ==========
-  function calcular() {
-    const kgInput = document.getElementById('kg');
-    const resultado = document.getElementById('resultado');
-    const kg = parseFloat(kgInput.value);
-
-    if (kg > 0) {
-      const valorizables = (kg * 0.8).toLocaleString('es-CL', { maximumFractionDigits: 1 });
-      resultado.innerHTML = `
-        <i class="fas fa-check-circle" style="margin-right:8px;"></i>
-        Estimación: <strong>${valorizables} kg</strong> valorizables.<br>
-        <span style="font-size:0.9em;opacity:0.8;">Cumplimiento ambiental optimizado.</span>
-      `;
-      resultado.style.opacity = '1';
-    } else {
-      resultado.innerHTML = '<i class="fas fa-exclamation-triangle" style="margin-right:8px;"></i> Ingrese un valor válido mayor a 0';
-      resultado.style.opacity = '1';
-    }
+  const sentinel = document.getElementById('top-sentinel');
+  if (header && sentinel) {
+    const headerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+    }, {
+      root: null,
+      threshold: 0
+    });
+    headerObserver.observe(sentinel);
   }
-
-  // Enter key en calculadora
-  document.getElementById('kg').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') calcular();
+  // ========== CALCULADORA INTERACTIVA ==========
+  function calcular() {
+    const kgSlider = document.getElementById('kg');
+    const tipoSelect = document.getElementById('tipo-residuo');
+    const resultado = document.getElementById('resultado');
+    const kgValueLabel = document.getElementById('kg-value');
+    
+    if (!kgSlider || !tipoSelect || !resultado) return;
+    const kg = parseFloat(kgSlider.value);
+    if (kgValueLabel) {
+      kgValueLabel.textContent = kg.toLocaleString('es-CL') + ' kg';
+    }
+    // Porcentaje de valorización según tipo de residuo
+    let factor = 0.8; 
+    let nombreResiduo = "excedentes generales";
+    switch (tipoSelect.value) {
+      case 'metales':
+        factor = 0.95;
+        nombreResiduo = "metales";
+        break;
+      case 'papel':
+        factor = 0.90;
+        nombreResiduo = "papel y cartón";
+        break;
+      case 'plasticos':
+        factor = 0.75;
+        nombreResiduo = "plásticos";
+        break;
+      case 'madera':
+        factor = 0.85;
+        nombreResiduo = "maderas y pallets";
+        break;
+      default:
+        factor = 0.80;
+        nombreResiduo = "excedentes mixtos";
+    }
+    const valorizables = (kg * factor).toLocaleString('es-CL', { maximumFractionDigits: 1 });
+    const co2Evitado = (kg * factor * 1.2).toLocaleString('es-CL', { maximumFractionDigits: 1 }); // Co2 evitado estimado
+    resultado.innerHTML = `
+      <div style="font-size: 1.05rem; margin-bottom: 6px;">
+        <i class="fas fa-check-circle" style="margin-right:8px; color:var(--accent);"></i>
+        Potencial: <strong>${valorizables} kg</strong> de ${nombreResiduo} valorizables.
+      </div>
+      <div style="font-size: 0.9rem; opacity: 0.9;">
+        <i class="fas fa-cloud-sun" style="margin-right:8px; color:var(--accent-soft);"></i>
+        Evita aprox. <strong>${co2Evitado} kg de CO₂</strong> eq. a la atmósfera.
+      </div>
+    `;
+    resultado.classList.add('show');
+  }
+  // Inicializar cálculo de calculadora
+  document.addEventListener('DOMContentLoaded', calcular);
+  // ========== FAQ ACORDEÓN ==========
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = button.parentElement;
+      const isActive = item.classList.contains('active');
+      
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+      
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    });
   });
-
   // ========== FORMULARIO ==========
   function enviar(e) {
     e.preventDefault();
-    const btn = e.target.querySelector('button[type="submit"]');
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    if (!btn) return;
     const originalText = btn.innerHTML;
-
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
     btn.disabled = true;
-
-    setTimeout(() => {
-      btn.innerHTML = '<i class="fas fa-check"></i> Solicitud enviada';
-      btn.style.background = 'linear-gradient(135deg, #00A878, #6ED3B1)';
-
+    const empresa = document.getElementById('empresa').value;
+    const email = document.getElementById('email').value;
+    const requerimiento = document.getElementById('requerimiento').value;
+    // IMPORTANTE: Reemplaza "TU_ACCESS_KEY_AQUI" por la clave gratuita que te da Web3Forms
+    const accessKey = "TU_ACCESS_KEY_AQUI";
+    if (accessKey === "TU_ACCESS_KEY_AQUI") {
+      // Si el usuario no ha puesto su clave real, hacemos una simulación para que no falle visualmente
+      setTimeout(() => {
+        btn.innerHTML = '<i class="fas fa-check"></i> (Simulación) Solicitud enviada';
+        btn.style.background = 'linear-gradient(135deg, #00A878, #6ED3B1)';
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+          btn.style.background = '';
+          form.reset();
+        }, 2000);
+      }, 1200);
+      return;
+    }
+    // Envío real seguro a Gmail mediante Web3Forms
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        access_key: accessKey,
+        subject: `Nuevo requerimiento de contacto comercial - ${empresa}`,
+        from_name: empresa,
+        email: email,
+        message: requerimiento
+      })
+    })
+    .then(async (response) => {
+      if (response.status === 200) {
+        btn.innerHTML = '<i class="fas fa-check"></i> Solicitud enviada';
+        btn.style.background = 'linear-gradient(135deg, #00A878, #6ED3B1)';
+        form.reset();
+      } else {
+        btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error al enviar';
+        btn.style.background = '#ff6b6b';
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error de conexión';
+      btn.style.background = '#ff6b6b';
+    })
+    .finally(() => {
       setTimeout(() => {
         btn.innerHTML = originalText;
         btn.disabled = false;
         btn.style.background = '';
-        e.target.reset();
-      }, 2000);
-    }, 1200);
+      }, 2500);
+    });
   }
-
   // ========== MENÚ MÓVIL ==========
   const toggle = document.getElementById('menu-toggle');
   const nav = document.getElementById('nav');
-
-  toggle.addEventListener('click', () => {
-    nav.classList.toggle('active');
-    const icon = toggle.querySelector('i');
-    icon.classList.toggle('fa-bars');
-    icon.classList.toggle('fa-times');
-  });
-
-  // Cerrar menú al hacer click en un enlace
-  document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', () => {
-      nav.classList.remove('active');
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const isActive = nav.classList.toggle('active');
+      toggle.setAttribute('aria-expanded', isActive);
       const icon = toggle.querySelector('i');
-      icon.classList.add('fa-bars');
-      icon.classList.remove('fa-times');
-    });
-  });
-
-  // ========== SCROLL REVEAL ==========
-  function revealOnScroll() {
-    const reveals = document.querySelectorAll('.reveal');
-    const cards = document.querySelectorAll('.card');
-    const windowHeight = window.innerHeight;
-
-    reveals.forEach(el => {
-      const top = el.getBoundingClientRect().top;
-      if (top < windowHeight - 80) {
-        el.classList.add('active');
+      if (icon) {
+        icon.classList.toggle('fa-bars', !isActive);
+        icon.classList.toggle('fa-times', isActive);
       }
     });
-
-    // Animación escalonada cards
-    cards.forEach((card, index) => {
-      const top = card.getBoundingClientRect().top;
-      if (top < windowHeight - 50) {
-        setTimeout(() => {
-          card.classList.add('active');
-        }, index * 120);
-      }
+    // Cerrar menú al hacer click en un enlace
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+        const icon = toggle.querySelector('i');
+        if (icon) {
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        }
+      });
     });
   }
-
-  window.addEventListener('scroll', revealOnScroll);
-  window.addEventListener('load', revealOnScroll);
-
+  // ========== SCROLL REVEAL (Usando IntersectionObserver) ==========
+  const revealElements = document.querySelectorAll('.reveal');
+  const cards = document.querySelectorAll('.card');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15
+    });
+    revealElements.forEach(el => revealObserver.observe(el));
+    const cardObserver = new IntersectionObserver((entries, observer) => {
+      let delay = 0;
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('active');
+          }, delay);
+          delay += 120;
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    cards.forEach(card => cardObserver.observe(card));
+  } else {
+    // Fallback para navegadores obsoletos
+    revealElements.forEach(el => el.classList.add('active'));
+    cards.forEach(card => card.classList.add('active'));
+  }
   // ========== SMOOTH SCROLL PARA ENLACES INTERNOS ==========
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+      
+      const target = document.querySelector(targetId);
       if (target) {
+        e.preventDefault();
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   });
+  // Regular la velocidad del video del Hero de forma segura
+  document.addEventListener('DOMContentLoaded', () => {
+    const video = document.querySelector('.hero-video');
+    if (video) {
+      video.playbackRate = 0.8;
+    }
+  });
 </script>
-
 </body>
 </html>
